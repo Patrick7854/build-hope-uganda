@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Gallery — BUILD HOPE UGANDA / BH</title>
+  <meta name="description"
+    content="View photos from BUILD HOPE UGANDA activities in livelihoods, environment, WASH, education, and protection." />
+  <meta property="og:title" content="BUILD HOPE UGANDA Photo Gallery" />
+  <meta property="og:description"
+    content="Real activity photos from BUILD HOPE UGANDA's work in Kyangwali Refugee Settlement." />
+  <meta property="og:image" content="asset/build activities images/IMG-20260506-WA0007.jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="asset/build-hope-uganda-logo-transparent.png" />
+  <link rel="stylesheet" href="css/shared.css"/>
+  <link rel="stylesheet" href="css/gallery.css"/>
+</head>
+<body data-page="gallery">
+<div id="topbar"></div>
+<div id="navbar"></div>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Gallery</span></div>
+    <h1>Photo Gallery</h1>
+    <p>Glimpses of livelihoods, environmental action, WASH, education, and community-based protection in Kyangwali Refugee Settlement.</p>
+  </div>
+</div>
+
+<section class="section bg-white">
+  <div class="section-inner">
+    <div class="gallery-filter reveal">
+      <button class="gf-btn active" data-cat="all">All</button>
+      <button class="gf-btn" data-cat="community">Community</button>
+      <button class="gf-btn" data-cat="skills">Livelihoods</button>
+      <button class="gf-btn" data-cat="environment">Environment</button>
+      <button class="gf-btn" data-cat="education">Education</button>
+    </div>
+    <div class="gallery-masonry">
+      <div class="gitem reveal" data-cat="community">
+        <img src="asset/build activities images/IMG-20260506-WA0007.jpg" alt="Community gathering" loading="lazy" decoding="async"/>
+        <div class="gcap">Community consultation and training session</div>
+      </div>
+      <div class="gitem reveal" data-cat="skills">
+        <img src="asset/build activities images/IMG-20260504-WA0024.jpg" alt="Agriculture skills" loading="lazy" decoding="async"/>
+        <div class="gcap">Climate-smart agriculture demonstration</div>
+      </div>
+      <div class="gitem reveal" data-cat="community">
+        <img src="asset/build activities images/IMG-20260504-WA0009.jpg" alt="Women empowerment" loading="lazy" decoding="async"/>
+        <div class="gcap">Women, youth, and vulnerable household support</div>
+      </div>
+      <div class="gitem reveal" data-cat="education">
+        <img src="asset/build activities images/IMG-20260504-WA0007.jpg" alt="Education" loading="lazy" decoding="async"/>
+        <div class="gcap">Functional adult literacy learning</div>
+      </div>
+      <div class="gitem reveal" data-cat="environment">
+        <img src="asset/build activities images/IMG-20260504-WA0016.jpg" alt="Tree planting" loading="lazy" decoding="async"/>
+        <div class="gcap">Tree seedlings and environmental protection</div>
+      </div>
+      <div class="gitem reveal" data-cat="community">
+        <img src="asset/build activities images/IMG-20260504-WA0045.jpg" alt="Youth" loading="lazy" decoding="async"/>
+        <div class="gcap">Youth skills and income generation</div>
+      </div>
+      <div class="gitem reveal" data-cat="skills">
+        <img src="asset/build activities images/IMG-20260504-WA0002.jpg" alt="Vocational skills" loading="lazy" decoding="async"/>
+        <div class="gcap">Practical vocational skills training</div>
+      </div>
+      <div class="gitem reveal" data-cat="community">
+        <img src="asset/build activities images/IMG-20260504-WA0006.jpg" alt="Community meeting" loading="lazy" decoding="async"/>
+        <div class="gcap">GBV and protection awareness session</div>
+      </div>
+      <div class="gitem reveal" data-cat="education">
+        <img src="asset/build activities images/IMG-20260506-WA0001.jpg" alt="Education and literacy support" loading="lazy" decoding="async"/>
+        <div class="gcap">Education and literacy support</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">✕</button>
+  <img id="lbImg" alt="Selected gallery photo"/>
+  <p id="lbCap"></p>
+</div>
+
+<div id="footer"></div>
+<script src="js/nav.js"></script>
+<script>
+  // Filter
+  document.querySelectorAll('.gf-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gf-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      document.querySelectorAll('.gitem').forEach(item => {
+        item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'block' : 'none';
+      });
+    });
+  });
+  // Lightbox
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCap = document.getElementById('lbCap');
+  document.querySelectorAll('.gitem').forEach(item => {
+    item.addEventListener('click', () => {
+      lbImg.src = item.querySelector('img').src;
+      lbCap.textContent = item.querySelector('.gcap').textContent;
+      lb.classList.add('open');
+    });
+  });
+  document.getElementById('lbClose').addEventListener('click', () => lb.classList.remove('open'));
+  lb.addEventListener('click', e => { if(e.target === lb) lb.classList.remove('open'); });
+</script>
+</body>
+</html>

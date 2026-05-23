@@ -1,0 +1,243 @@
+/* ── ABOUT PAGE CSS ── */
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.story-img {
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-lg);
+}
+.reg-box {
+  background: var(--navy);
+  border-radius: var(--r-md);
+  padding: 1.4rem;
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+.reg-item strong {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 0.2rem;
+}
+.reg-item span {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+.credibility-section {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+.cred-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.cred-card {
+  background: var(--off);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 1.2rem;
+}
+.cred-card strong {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 0.45rem;
+}
+.cred-card span {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.cred-note {
+  background: var(--navy);
+  border-radius: var(--r-lg);
+  margin-top: 1.5rem;
+  padding: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+.cred-note p {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 760px;
+}
+.vm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+.vm-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 2rem;
+  border-top: 4px solid var(--gold);
+}
+.vm-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.vm-card h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+.vm-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+.values-list {
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+}
+.values-list li {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+  line-height: 1.5;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+.team-card {
+  background: var(--off);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.4rem;
+  transition:
+    box-shadow var(--t),
+    transform var(--t);
+}
+.team-card:hover {
+  box-shadow: var(--sh-md);
+  transform: translateY(-3px);
+}
+.tav {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.tinfo h4 {
+  font-family: "Playfair Display", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.tinfo span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--blue);
+}
+.tinfo p {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+.founders-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.founder-item {
+  text-align: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 1.2rem 0.8rem;
+}
+.f-init {
+  width: 52px;
+  height: 52px;
+  background: var(--navy);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 0 auto 0.7rem;
+}
+.founder-item span {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+.founder-item small {
+  font-size: 0.72rem;
+  color: var(--blue);
+}
+
+@media (max-width: 960px) {
+  .story-grid,
+  .vm-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .cred-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cred-note {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .team-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .founders-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .team-grid,
+  .founders-grid,
+  .cred-grid {
+    grid-template-columns: 1fr;
+  }
+  .cred-note {
+    border-radius: var(--r-md);
+    padding: 1.3rem;
+  }
+}
