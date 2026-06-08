@@ -211,11 +211,13 @@
   z-index: 1;
   width: min(1120px, 100%);
   height: min(86vh, 860px);
+  max-height: calc(100dvh - 3rem);
   margin: 0 auto;
   top: 50%;
   transform: translateY(-50%);
   display: grid;
   grid-template-rows: auto 1fr;
+  min-height: 0;
   background: var(--white);
   border-radius: var(--r-md);
   overflow: hidden;
@@ -262,9 +264,12 @@
 .profile-reader {
   display: grid;
   grid-template-rows: auto 1fr;
+  min-height: 0;
+  overflow: hidden;
   background: #101827;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: pan-y;
 }
 .profile-reader-tools {
   min-height: 48px;
@@ -298,10 +303,13 @@
   color: var(--navy);
 }
 .profile-pages {
+  min-height: 0;
   height: 100%;
   overflow: auto;
   padding: 1.2rem;
   overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 .profile-page {
   width: fit-content;
@@ -316,6 +324,7 @@
   display: block;
   max-width: 100%;
   height: auto;
+  pointer-events: none;
 }
 .profile-reader-error {
   max-width: 520px;
@@ -548,7 +557,8 @@ body.profile-lock {
     padding: 0.7rem;
   }
   .profile-modal-panel {
-    height: 90vh;
+    height: calc(100dvh - 1.4rem);
+    max-height: calc(100dvh - 1.4rem);
   }
   .profile-modal-head {
     min-height: 70px;

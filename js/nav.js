@@ -166,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const profileOpeners = document.querySelectorAll('.profile-open');
   const profileClosers = document.querySelectorAll('[data-profile-close]');
   let profilePdf = null;
-  let profilePdfLib = null;
   let profileRendering = false;
   let profileRendered = false;
   let profileZoom = 1;
@@ -183,13 +182,18 @@ document.addEventListener('DOMContentLoaded', () => {
     setProfileStatus('Loading document...');
 
     try {
+      const profilePdfLib = window.pdfjsLib;
       if (!profilePdfLib) {
-        profilePdfLib = await import('./pdfjs/pdf.min.js');
-        profilePdfLib.GlobalWorkerOptions.workerSrc = 'js/pdfjs/pdf.worker.min.js';
+        throw new Error('Document reader library was not loaded.');
       }
+      profilePdfLib.GlobalWorkerOptions.workerSrc = 'js/pdfjs/pdf.worker.min.js';
 
       if (!profilePdf) {
-        profilePdf = await profilePdfLib.getDocument(profileReader.dataset.pdfSrc).promise;
+        profilePdf = await profilePdfLib.getDocument({
+          url: profileReader.dataset.pdfSrc,
+          disableRange: true,
+          disableStream: true,
+        }).promise;
       }
 
       const pageWidth = Math.max(260, profilePages.clientWidth - 28);
@@ -223,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setProfileStatus(`${profilePdf.numPages} pages ready`);
     } catch (error) {
       setProfileStatus('The profile document could not be loaded.');
-      profilePages.innerHTML = '<p class="profile-reader-error">Please refresh the page and try again.</p>';
+      profilePages.innerHTML = `<p class="profile-reader-error">Please refresh the page and try again.<small>${error.message || 'Document renderer error'}</small></p>`;
     } finally {
       profileRendering = false;
     }
