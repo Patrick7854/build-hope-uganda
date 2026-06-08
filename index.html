@@ -241,11 +241,15 @@
         </div>
         <button class="profile-close" type="button" aria-label="Close profile document" data-profile-close>×</button>
       </div>
-      <div class="profile-reader" id="profileReader">
-        <iframe
-          title="BUILD HOPE UGANDA Profile Document"
-          src="asset/profill/Build%20Hope%20Uganda%20Profile%202020-2026.pdf#toolbar=0&navpanes=0&scrollbar=1"
-          loading="lazy"></iframe>
+      <div class="profile-reader" id="profileReader" data-pdf-src="asset/profill/Build%20Hope%20Uganda%20Profile%202020-2026.pdf">
+        <div class="profile-reader-tools" aria-label="Profile document controls">
+          <span id="profilePageStatus">Loading document...</span>
+          <div>
+            <button class="profile-tool-btn" type="button" id="profileZoomOut" aria-label="Zoom out">−</button>
+            <button class="profile-tool-btn" type="button" id="profileZoomIn" aria-label="Zoom in">+</button>
+          </div>
+        </div>
+        <div class="profile-pages" id="profilePages" aria-live="polite"></div>
       </div>
     </div>
   </div>

@@ -260,15 +260,72 @@
   color: var(--navy);
 }
 .profile-reader {
+  display: grid;
+  grid-template-rows: auto 1fr;
   background: #101827;
   user-select: none;
   -webkit-user-select: none;
 }
-.profile-reader iframe {
-  width: 100%;
+.profile-reader-tools {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.8rem;
+  background: #0c1422;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.84rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.profile-reader-tools > div {
+  display: flex;
+  gap: 0.45rem;
+}
+.profile-tool-btn {
+  width: 2.35rem;
+  height: 2.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.profile-tool-btn:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+.profile-pages {
   height: 100%;
-  border: 0;
+  overflow: auto;
+  padding: 1.2rem;
+  overscroll-behavior: contain;
+}
+.profile-page {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 1.2rem;
+  background: var(--white);
+  border-radius: var(--r-sm);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.34);
+  overflow: hidden;
+}
+.profile-page canvas {
   display: block;
+  max-width: 100%;
+  height: auto;
+}
+.profile-reader-error {
+  max-width: 520px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--r-sm);
+  color: rgba(255, 255, 255, 0.78);
+  text-align: center;
 }
 body.profile-lock {
   overflow: hidden;
@@ -491,7 +548,7 @@ body.profile-lock {
     padding: 0.7rem;
   }
   .profile-modal-panel {
-    height: 88vh;
+    height: 90vh;
   }
   .profile-modal-head {
     min-height: 70px;
@@ -499,5 +556,12 @@ body.profile-lock {
   }
   .profile-modal-head h2 {
     font-size: 1.1rem;
+  }
+  .profile-pages {
+    padding: 0.65rem;
+  }
+  .profile-reader-tools {
+    font-size: 0.76rem;
+    padding: 0.45rem 0.55rem;
   }
 }

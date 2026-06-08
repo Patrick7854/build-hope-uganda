@@ -159,14 +159,82 @@ document.addEventListener('DOMContentLoaded', () => {
   // Profile document reader
   const profileModal = document.getElementById('profileModal');
   const profileReader = document.getElementById('profileReader');
+  const profilePages = document.getElementById('profilePages');
+  const profilePageStatus = document.getElementById('profilePageStatus');
+  const profileZoomIn = document.getElementById('profileZoomIn');
+  const profileZoomOut = document.getElementById('profileZoomOut');
   const profileOpeners = document.querySelectorAll('.profile-open');
   const profileClosers = document.querySelectorAll('[data-profile-close]');
+  let profilePdf = null;
+  let profilePdfLib = null;
+  let profileRendering = false;
+  let profileRendered = false;
+  let profileZoom = 1;
+
+  const setProfileStatus = message => {
+    if (profilePageStatus) profilePageStatus.textContent = message;
+  };
+
+  const renderProfileDocument = async () => {
+    if (!profileReader || !profilePages || profileRendering) return;
+
+    profileRendering = true;
+    profilePages.innerHTML = '';
+    setProfileStatus('Loading document...');
+
+    try {
+      if (!profilePdfLib) {
+        profilePdfLib = await import('./pdfjs/pdf.min.js');
+        profilePdfLib.GlobalWorkerOptions.workerSrc = 'js/pdfjs/pdf.worker.min.js';
+      }
+
+      if (!profilePdf) {
+        profilePdf = await profilePdfLib.getDocument(profileReader.dataset.pdfSrc).promise;
+      }
+
+      const pageWidth = Math.max(260, profilePages.clientWidth - 28);
+      const outputScale = Math.min(window.devicePixelRatio || 1, 2);
+
+      for (let pageNumber = 1; pageNumber <= profilePdf.numPages; pageNumber += 1) {
+        setProfileStatus(`Rendering page ${pageNumber} of ${profilePdf.numPages}`);
+
+        const page = await profilePdf.getPage(pageNumber);
+        const baseViewport = page.getViewport({ scale: 1 });
+        const displayScale = Math.min(pageWidth / baseViewport.width, 1.35) * profileZoom;
+        const renderViewport = page.getViewport({ scale: displayScale * outputScale });
+        const displayViewport = page.getViewport({ scale: displayScale });
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d', { alpha: false });
+        const pageWrap = document.createElement('div');
+
+        canvas.width = Math.floor(renderViewport.width);
+        canvas.height = Math.floor(renderViewport.height);
+        canvas.style.width = `${Math.floor(displayViewport.width)}px`;
+        canvas.style.height = `${Math.floor(displayViewport.height)}px`;
+        pageWrap.className = 'profile-page';
+        pageWrap.setAttribute('aria-label', `Profile document page ${pageNumber}`);
+        pageWrap.appendChild(canvas);
+        profilePages.appendChild(pageWrap);
+
+        await page.render({ canvasContext: context, viewport: renderViewport }).promise;
+      }
+
+      profileRendered = true;
+      setProfileStatus(`${profilePdf.numPages} pages ready`);
+    } catch (error) {
+      setProfileStatus('The profile document could not be loaded.');
+      profilePages.innerHTML = '<p class="profile-reader-error">Please refresh the page and try again.</p>';
+    } finally {
+      profileRendering = false;
+    }
+  };
 
   const openProfile = () => {
     if (!profileModal) return;
     profileModal.classList.add('open');
     profileModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('profile-lock');
+    renderProfileDocument();
   };
 
   const closeProfile = () => {
@@ -178,12 +246,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   profileOpeners.forEach(button => button.addEventListener('click', openProfile));
   profileClosers.forEach(button => button.addEventListener('click', closeProfile));
+  profileZoomIn?.addEventListener('click', () => {
+    profileZoom = Math.min(profileZoom + 0.15, 1.6);
+    if (profileModal?.classList.contains('open')) renderProfileDocument();
+  });
+  profileZoomOut?.addEventListener('click', () => {
+    profileZoom = Math.max(profileZoom - 0.15, 0.7);
+    if (profileModal?.classList.contains('open')) renderProfileDocument();
+  });
 
   if (profileReader) {
     ['contextmenu', 'copy', 'cut', 'dragstart'].forEach(eventName => {
       profileReader.addEventListener(eventName, event => event.preventDefault());
     });
   }
+
+  let profileResizeTimer;
+  window.addEventListener('resize', () => {
+    if (!profileRendered || !profileModal?.classList.contains('open')) return;
+    clearTimeout(profileResizeTimer);
+    profileResizeTimer = setTimeout(renderProfileDocument, 250);
+  });
 
   document.addEventListener('keydown', event => {
     const modalOpen = profileModal && profileModal.classList.contains('open');

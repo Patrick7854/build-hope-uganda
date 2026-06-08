@@ -9,6 +9,8 @@ const types = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
+  ".mjs": "application/javascript; charset=utf-8",
+  ".pdf": "application/pdf",
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
@@ -42,6 +44,6 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(port, "127.0.0.1", () => {
-  console.log(`BUILD HOPE UGANDA preview running at http://127.0.0.1:${port}/`);
+server.listen(port, "0.0.0.0", () => {
+  console.log(`BUILD HOPE UGANDA preview running at http://localhost:${port}/`);
 });
