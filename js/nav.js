@@ -155,4 +155,44 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.isIntersecting) { el.classList.add('in'); }
     }, { threshold: 0.12 }).observe(el);
   });
+
+  // Profile document reader
+  const profileModal = document.getElementById('profileModal');
+  const profileReader = document.getElementById('profileReader');
+  const profileOpeners = document.querySelectorAll('.profile-open');
+  const profileClosers = document.querySelectorAll('[data-profile-close]');
+
+  const openProfile = () => {
+    if (!profileModal) return;
+    profileModal.classList.add('open');
+    profileModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('profile-lock');
+  };
+
+  const closeProfile = () => {
+    if (!profileModal) return;
+    profileModal.classList.remove('open');
+    profileModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('profile-lock');
+  };
+
+  profileOpeners.forEach(button => button.addEventListener('click', openProfile));
+  profileClosers.forEach(button => button.addEventListener('click', closeProfile));
+
+  if (profileReader) {
+    ['contextmenu', 'copy', 'cut', 'dragstart'].forEach(eventName => {
+      profileReader.addEventListener(eventName, event => event.preventDefault());
+    });
+  }
+
+  document.addEventListener('keydown', event => {
+    const modalOpen = profileModal && profileModal.classList.contains('open');
+    if (!modalOpen) return;
+
+    const key = event.key.toLowerCase();
+    const blockedShortcut = (event.ctrlKey || event.metaKey) && ['c', 'p', 's'].includes(key);
+
+    if (key === 'escape') closeProfile();
+    if (blockedShortcut) event.preventDefault();
+  });
 });
